@@ -12,5 +12,5 @@ This script currently uses my own version of qb-menu, xyz-3dsound, and mnm_notif
 [Youtube](https://youtu.be/NQtuZApIDA8)
 
 ##### Qbus.xyz Discord:
-[Discord](https://discord.gg/Gec9kBKwcB)
+[Discord](https://discord.gg/jTsrKaV6As)
 
