@@ -1,11 +1,4 @@
-QBCore = nil
-
-Citizen.CreateThread(function()
-    while QBCore == nil do
-        TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
-        Citizen.Wait(200)
-    end
-end)
+local QBCore = exports['qb-core']:GetCoreObject()
 
 local holdingBoombox = false
 local boomanimDict = "missheistdocksprep1hold_cellphone"
@@ -18,7 +11,7 @@ Keys = {
 RegisterNetEvent('3dsounds:client:attach', function(data)
     local net = data.object
     local index = data.index
-    exports['qb-smallresources']:RequestAnimationDict("pickup_object")
+    RequestAnimationDict("pickup_object")
     TaskPlayAnim(PlayerPedId(), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
     Citizen.Wait(1300)
     ClearPedTasks(PlayerPedId())
@@ -65,7 +58,7 @@ AddEventHandler("holdingBoombox", function(net)
                 --DetachEntity(GLOBAL_PED, 1, true)
                 --ClearPedTasks(GLOBAL_PED)
                 inZone  = false
-                exports['qb-smallresources']:RequestAnimationDict("pickup_object")
+                RequestAnimationDict("pickup_object")
                 TaskPlayAnim(PlayerPedId(), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
                 Citizen.Wait(1300)
                 ClearPedTasks(PlayerPedId())
@@ -106,7 +99,7 @@ AddEventHandler("3dsounds:client:placeBoombox", function()
     local heading = GetEntityHeading(PlayerPedId())
     local forward = GetEntityForwardVector(PlayerPedId())
     local x, y, z = table.unpack(coords + forward * 0.5)
-    exports['qb-smallresources']:RequestAnimationDict("pickup_object")
+    RequestAnimationDict("pickup_object")
     TaskPlayAnim(PlayerPedId(), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
     Citizen.Wait(1300)
     ClearPedTasks(PlayerPedId())
@@ -200,7 +193,7 @@ AddEventHandler("qb-boombox:client:putAwayBoombox", function(data)
     QBCore.Functions.TriggerCallback('qb-boombox:server:putAwayBoombox', function(result)
         if result then
             local net = data.object
-            exports['qb-smallresources']:RequestAnimationDict("pickup_object")
+            RequestAnimationDict("pickup_object")
             TaskPlayAnim(PlayerPedId(), "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
             Citizen.Wait(1300)
             ClearPedTasks(PlayerPedId())
@@ -211,3 +204,9 @@ AddEventHandler("qb-boombox:client:putAwayBoombox", function(data)
     end)
 end)
 
+function RequestAnimationDict(AnimDict)
+    RequestAnimDict(AnimDict)
+    while not HasAnimDictLoaded(AnimDict) do
+        Citizen.Wait(1)
+    end
+end
