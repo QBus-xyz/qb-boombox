@@ -205,6 +205,7 @@ AddEventHandler("3dsounds:client:boomBoxMenu", function(data)
             }
         }
     }
+	exports['qb-menu']:openMenu(menu)
 end)
 
 RegisterNetEvent("qb-boombox:client:playBoombox")
